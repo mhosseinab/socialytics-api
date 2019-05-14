@@ -1,7 +1,7 @@
 {
   "name": "socialytics-api",
   "version": "0.1.0",
-  "description": "socialytics.me APIs on amazon AWS",
+  "description": "socialytics.me APIs",
   "scripts": {
     "start": "nodemon ./src/api/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@hapi/hapi": "^18.3.1",
+    "firebase-admin": "^7.3.0",
     "request": "^2.88.0"
   }
 }

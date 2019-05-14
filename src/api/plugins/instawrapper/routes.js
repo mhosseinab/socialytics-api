@@ -15,5 +15,17 @@ module.exports = function routes (options) {
           handler: MODULE.GetUserMedia,
         } 
       },
+      { 
+        method: 'GET', path: '/mediacomments/{shortcode}/{first}/{after}', 
+        config: { 
+          handler: MODULE.GetMediaComments,
+        } 
+      },
+      { 
+        method: 'GET', path: '/commentthread/{comment_id}/{first}/{after}', 
+        config: { 
+          handler: MODULE.GetCommentThread,
+        } 
+      },
   ];
 };

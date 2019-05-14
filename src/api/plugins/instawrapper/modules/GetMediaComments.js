@@ -1,15 +1,16 @@
 
 const utils = require('./utils');
 
-async function GetUserMedia (request, h) {
-  let userid = request.params.userid;
+async function GetMediaComments (request, h) {
+  let shortcode = request.params.shortcode;
   let first = request.params.first;
   let after = request.params.after;
   if(after==0) after = '';
 
   try{
-    let gis = await utils.generate_gis(`{"id":"${userid}","first":${first},"after":"${after}"}`);
-    let data = await utils.http_get(`https://www.instagram.com/graphql/query/?query_hash=f2405b236d85e8296cf30347c9f08c2a&variables={"id":"${userid}","first":${first},"after":"${after}"}`,gis);
+    let variables = `{"shortcode":"${shortcode}","first":${first},"after":"${after}"}`
+    let gis = await utils.generate_gis(variables);
+    let data = await utils.http_get(`https://www.instagram.com/graphql/query/?query_hash=97b41c52301f77ce508f55e66d17620e&variables=${variables}`,gis);
     return JSON.parse(data);
   } catch(e){
     console.log(e)
@@ -19,4 +20,4 @@ async function GetUserMedia (request, h) {
 
 }
 
-module.exports =  GetUserMedia;
+module.exports =  GetMediaComments;
