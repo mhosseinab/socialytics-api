@@ -1,14 +1,15 @@
 'use strict';
 
 const Hapi = require('@hapi/hapi');
-const database = require('./common/db');
-
+const firebase = require('./common/firebase');
 const API_VERSION = 'v1';
-
 const server = Hapi.server({
   port: 5000,
   host: '0.0.0.0'
 });
+
+server.app.firebase = firebase;
+//db will be accessible via request.server.app.database
 
 server.route({
   method: 'GET',
@@ -18,9 +19,6 @@ server.route({
     return 'socialytics API set';
   }
 });
-
-server.app.database = database;
-//db will be accessible via request.server.app.database
 
 const init_server = async () => {
   await server.register([
