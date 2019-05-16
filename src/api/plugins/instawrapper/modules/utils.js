@@ -39,6 +39,8 @@ function http_get(url, RHXGIS){
 
 function get_rhx_gis(){
   return new Promise((resolve, reject) => {
+    resolve('');
+    return;
     http_get("https://www.instagram.com/",null)
       .then(response => {
         let matches = response.match(/rhx_gis":"(\w+)/);

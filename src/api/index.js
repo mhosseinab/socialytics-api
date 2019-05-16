@@ -1,15 +1,19 @@
 'use strict';
 
-const Hapi = require('@hapi/hapi');
-const firebase = require('./common/firebase');
-const API_VERSION = 'v1';
+const Hapi = require('@hapi/hapi')
+, firebase = require('../common/firebase')
+, kue = require('kue')
+, queue = kue.createQueue()
+, API_VERSION = 'v1';
+
 const server = Hapi.server({
   port: 5000,
   host: '0.0.0.0'
 });
 
 server.app.firebase = firebase;
-//db will be accessible via request.server.app.database
+server.app.queue = queue;
+//firebase db will be accessible via request.server.app.firebase.db
 
 server.route({
   method: 'GET',

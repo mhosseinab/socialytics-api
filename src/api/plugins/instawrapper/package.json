@@ -5,6 +5,6 @@
     "node": ">=8.0.0"
   },
   "peerDependencies": {
-    "hapi": "17.x.x"
+    "hapi": "18.x.x"
   }
 }
