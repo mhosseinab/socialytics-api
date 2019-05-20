@@ -1,11 +1,12 @@
-const util = require('util')
+
+
 async function Ping (request, h) {
   return new Promise((resolve, reject) => {
-    const post_id = 'BxaXyetgbpq'
+    const post_id = 'BxkgqvCAqGv'
 
     let job = request.server.app.queue.create('post_comments', {
         post_id: post_id
-      , first: 100
+      , first: 300
       , server : request.server.info.uri
     }).priority('normal').attempts(3).backoff( {delay: 60*1000, type:'exponential'} )
       .save(err => {

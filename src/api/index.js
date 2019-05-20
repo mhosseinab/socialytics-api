@@ -2,6 +2,7 @@
 
 const Hapi = require('@hapi/hapi')
 , firebase = require('../common/firebase')
+, mongoose = require('../common/db')
 , kue = require('kue')
 , queue = kue.createQueue()
 , API_VERSION = 'v1';
@@ -12,6 +13,7 @@ const server = Hapi.server({
 });
 
 server.app.firebase = firebase;
+server.app.mongoose = mongoose;
 server.app.queue = queue;
 //firebase db will be accessible via request.server.app.firebase.db
 
