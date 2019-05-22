@@ -11,6 +11,7 @@ const commentModel = mongoose.Schema({
     hashtag: [String],
     hashtag_count: Number ,
     likes_count : Number ,
+    thread_count : Number ,
     owner: {
         username: String,
         userid: String,

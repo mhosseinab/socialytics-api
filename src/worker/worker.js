@@ -1,6 +1,8 @@
 const kue = require('kue')
  , queue = kue.createQueue()
  , axios = require("axios")
+ , chalk = require('chalk')
+ , log = console.log
  , { Comment } = require('../common/models')
  , firebase = require('../common/firebase')
  , firestore = firebase.firestore;
@@ -63,7 +65,7 @@ const ParseInstaComments = async response =>{
             , server : response.server_url
           }).save()
         }, 1000)
-      }
+      } 
     }
   }
 
@@ -80,6 +82,8 @@ const ParseInstaComments = async response =>{
       }).save()
     }, 1000)
     
+  } else {
+    log(chalk.bgYellow.bold('Done: ', post_id));
   }
 
   return {count, page_info, post_id}
@@ -98,6 +102,9 @@ const ParseCommentsThread = async response =>{
   let comment_id = json.data.comment.id;
   let page_info = json.data.comment.edge_threaded_comments.page_info;
   let comments = json.data.comment.edge_threaded_comments.edges;
+
+  log(chalk.blue.bold('Parsing threaded comment: ', comment_id));
+
   // console.log('comments', comments)
   for(let key in comments){
     let node = comments[key].node
@@ -105,6 +112,7 @@ const ParseCommentsThread = async response =>{
   }
 
   if(page_info.has_next_page){ 
+    log(chalk.yellow.bold('threaded comments has next page: ', comment_id));
     setTimeout(()=>{
       queue.create('comments_thread', {
           post_id: post_id
@@ -166,6 +174,7 @@ const SaveComment = async (node, post_id, parrent_id) => {
     hashtag: hashtag,
     hashtag_count: hashtag.length ,
     likes_count: node.edge_liked_by.count,
+    thread_count: (node.edge_threaded_comments) ? node.edge_threaded_comments.count || null : null,
     owner: {
         username: node.owner.username,
         userid: node.owner.id,
@@ -175,7 +184,7 @@ const SaveComment = async (node, post_id, parrent_id) => {
   }).save((err) => {
     //duplicate key
     if ( err && err.code === 11000 ) {
-      console.log('duplicate key: ', err.message);
+      // console.log('duplicate key: ', err.message);
     } else if(err){
       console.log(err)
     }

@@ -2,7 +2,7 @@
 
 async function Ping (request, h) {
   return new Promise((resolve, reject) => {
-    const post_id = 'BxkgqvCAqGv'
+    const post_id = 'Bxp8E7QlDYA'
 
     let job = request.server.app.queue.create('post_comments', {
         post_id: post_id
